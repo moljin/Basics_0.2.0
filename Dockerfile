@@ -12,11 +12,10 @@ RUN apt-get update && apt-get install -y git
 # 2. 작업 디렉토리 설정 (WORKDIR) # 컨테이너 내 명령 실행 기본 경로 설정.
 # github에서 내려받는 작업: 내려받으면 Basics_0.1.4 폴더가 만들어진다.
 WORKDIR /home/moljin
-RUN git clone https://github.com/moljin/Basics_0.1.4.git
+RUN git clone https://github.com/moljin/Basics_0.2.0.git
 
 # 만들어진 Basics_0.1.4 폴더에서 작업
-WORKDIR /home/moljin/Basics_0.1.4
-RUN python -m pip install --upgrade pip
+WORKDIR /home/moljin/Basics_0.2.0
 
 # 4. 의존성 설치 (RUN)
 # pip로 requirements.txt의 라이브러리 설치.
@@ -27,7 +26,7 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 EXPOSE 8000
 
 # 만들어진 Basics_0.1.4 폴더에서 작업
-WORKDIR /home/moljin/Basics_0.1.4
+WORKDIR /home/moljin/Basics_0.2.0
 # 7. 실행 명령 설정 (CMD)
 # 컨테이너 시작 시 실행될 기본 명령어. Uvicorn 서버 실행.
 # --host 0.0.0.0 : 컨테이너 외부에서의 접속을 허용하기 위해 필수!
