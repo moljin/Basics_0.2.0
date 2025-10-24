@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from typing import List, Optional
 
 from sqlalchemy import Integer, String, DateTime, func
@@ -14,8 +15,8 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(100), nullable=False)
     img_path: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
 
-    created_at: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    updated_at: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    created_at: Mapped[str] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[str] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"<User(id={self.id}, email='{self.email}')>"

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from sqlalchemy import DateTime, ForeignKey, Integer, String, func, Text
@@ -15,8 +15,8 @@ class Article(Base):
     img_path: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
     content: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # 외래키를 사용할 때, 제약 조건에 name을 ForeignKey 안에 ForeignKey("users.id", name="fk_author_id") 이렇게 넣어라.
     author_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", name="fk_author_id", ondelete='CASCADE'), nullable=False)
