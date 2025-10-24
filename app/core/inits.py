@@ -10,6 +10,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.test import exam
 from app.utils import exc_handler
+from app.utils.commons import to_kst
 from app.utils.middleware import TokenSetCookieMiddleware
 
 from app.apis import root, user, article, auth, quills
@@ -84,6 +85,7 @@ def create_app():
     app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
     templates.env.globals["STATIC_URL"] = "/static"
     templates.env.globals["MEDIA_URL"] = "/media"
+    templates.env.filters["to_kst"] = to_kst
 
     including_router(app)
     including_middleware(app)

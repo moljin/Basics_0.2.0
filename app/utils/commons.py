@@ -9,7 +9,8 @@ import os
 import aiofiles as aio
 from starlette.concurrency import run_in_threadpool
 
-from app.core.settings import STATIC_DIR, MEDIA_DIR
+
+from app.core.settings import MEDIA_DIR
 from app.models import User
 
 async def random_string(length:int, _type:str):
@@ -124,6 +125,23 @@ def is_valid_email(email: str) -> bool:
         return True
     except EmailNotValidError:
         return False
+
+
+from zoneinfo import ZoneInfo
+KST = ZoneInfo("Asia/Seoul")
+
+def to_kst(dt: datetime.datetime | None, fmt: str = "%Y-%m-%d %H:%M:%S") -> str:
+    """
+    UTC(또는 타임존 정보가 있는) datetime을 KST로 변환해 문자열로 반환합니다.
+    - dt가 naive(타임존 없음)이면 UTC로 간주합니다.
+    - dt가 None이면 빈 문자열을 반환합니다.
+    - fmt로 출력 포맷을 지정할 수 있습니다.
+    """
+    if dt is None:
+        return ""
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=datetime.timezone.utc)
+    return dt.astimezone(KST).strftime(fmt)
 
 
 def create_orm_id(objs_all, user):

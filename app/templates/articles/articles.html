@@ -102,7 +102,7 @@
                             <div class="uk-card-body">
                                 <h3 class="uk-card-title object-title"><a href="/articles/article/{{ article.id }}">{{ article.title }}</a></h3>
                                 <p class="uk-text-meta uk-margin-remove-top">
-                                    <time datetime="">{{ article.created_at }}</time>
+                                    <time datetime="">{{ article.created_at |to_kst }}</time>
                                 </p>
                                 <!-- 미리보기는 태그 제거 + 안전한 길이로 잘라서 표시 -->
                                 <div class="object-content">

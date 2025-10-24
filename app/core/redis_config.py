@@ -24,11 +24,12 @@ from redis.asyncio import Redis, ConnectionPool
 load_dotenv()
 config = get_config()
 host = os.environ.get("REDIS_HOST") if config.APP_ENV == "production" else "localhost"
+port = os.environ.get("REDIS_PORT") if config.APP_ENV == "production" else 6379
 password = os.environ.get("REDIS_PASSWORD") if config.APP_ENV == "production" else None
 
 redis_pool = ConnectionPool(
     host=host,
-    port=os.environ.get("REDIS_PORT"),
+    port=port,
     db=os.environ.get("REDIS_DB"),
     password=password,
     decode_responses=True,  # 문자열 응답을 자동으로 디코딩
