@@ -29,7 +29,7 @@ header .header-container {display: flex; width:98.5%; margin-top:5px;}
 
 .logo-container {display: flex; justify-content: space-evenly; height: 67px;}
 .logo-container .right {width: 5%;}
-.logo {position: relative; left: -20px; text-align: center; margin-top: 4px; padding: 10px 0; font-size: 50px; font-weight: 900;}
+.logo {position: relative; left: -20px; text-align: center; margin-top:px; padding: 10px 0; font-size: 50px; font-weight: 900;}
 .logo a {color: #485460;}
 .logo-container .left {width: 5%;}
 

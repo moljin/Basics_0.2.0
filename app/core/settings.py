@@ -154,11 +154,28 @@ AUTHCODE_EMAIL_HTML_TEMPLATE = """
 """
 
 
-NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
-NOW_TIME = datetime.datetime.now()
+# NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
+# NOW_TIME = datetime.datetime.now()
+
+try:
+    from zoneinfo import ZoneInfo  # Python 3.9+
+    KST = ZoneInfo("Asia/Seoul")
+except Exception:
+    # tzdata가 없을 때를 위한 안전한 폴백(고정 +09:00)
+    KST = datetime.timezone(datetime.timedelta(hours=9), name="KST")
+
+
+def get_times_for_template():
+    # 1) 항상 UTC aware부터 시작
+    _NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc)
+
+    # 2) 필요한 지역시간(KST)으로 변환
+    _NOW_TIME = _NOW_TIME_UTC.astimezone(KST)
+    return _NOW_TIME_UTC, _NOW_TIME
+now_time_utc, NOW_TIME = get_times_for_template()
+NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
 print("NOW_TIME_UTC: ", NOW_TIME_UTC)
 print("NOW_TIME: ", NOW_TIME)
-
 
 LOTTO_LATEST_URL = os.getenv("LOTTO_LATEST_URL")
 LOTTO_FILEPATH = os.path.join(MEDIA_DIR, os.getenv("LOTTO_FILEPATH"))# STATIC_DIR + os.getenv("LOTTO_FILEPATH")
