@@ -80,7 +80,6 @@ ACCESS_TOKEN_EXPIRE = 30
 REFRESH_TOKEN_EXPIRE = 7
 
 ACCESS_COOKIE_MAX_AGE = ACCESS_TOKEN_EXPIRE * 60 # 초 1800 : 30분
-REFRESH_COOKIE_EXPIRE = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=REFRESH_TOKEN_EXPIRE)
 
 # 로그인 시 쿠키에 저장한 이름과 동일해야 합니다.
 # 여기는 내부적으로만 사용되므로 굳이 변경할 필요는 없다.

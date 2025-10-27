@@ -3,11 +3,12 @@ from urllib.parse import urlparse
 from fastapi import APIRouter, Depends, HTTPException, Response, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordRequestForm
 
-from app.core.settings import ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, REFRESH_COOKIE_EXPIRE, ACCESS_COOKIE_MAX_AGE
+from app.core.settings import ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, ACCESS_COOKIE_MAX_AGE
 from app.schemas.auth import RefreshRequest, TokenResponse, LoginRequest
 from app.services.auth_service import AuthService, get_auth_service
 from app.services.token_service import AsyncTokenService
 from app.utils.auth import get_token_expiry, verify_token
+from app.utils.commons import refresh_expire
 
 router = APIRouter()
 bearer_scheme = HTTPBearer()
@@ -55,6 +56,7 @@ async def login(response: Response, request: Request,
 
     # 요청 정보로 HTTPS 여부 판별 (프록시가 있다면 x-forwarded-proto 우선)
     is_https = (request.headers.get("x-forwarded-proto") or request.url.scheme) == "https"
+    _REFRESH_COOKIE_EXPIRE = refresh_expire()
 
     if parsed_path == login_url or register_url or update_url:
         response.set_cookie(
@@ -73,7 +75,7 @@ async def login(response: Response, request: Request,
             httponly=True,  # JavaScript에서 쿠키에 접근 불가능하도록 설정
             secure=is_https,  # HTTPS 환경에서만 쿠키 전송
             samesite="strict",  # CSRF 공격 방지
-            expires = REFRESH_COOKIE_EXPIRE
+            expires = _REFRESH_COOKIE_EXPIRE
         )
 
         return token_data

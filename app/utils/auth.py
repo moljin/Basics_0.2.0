@@ -9,9 +9,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi import Depends, HTTPException
 
-from app.core.settings import ACCESS_TOKEN_EXPIRE, SECRET_KEY, ALGORITHM, REFRESH_COOKIE_EXPIRE
+from app.core.settings import ACCESS_TOKEN_EXPIRE, SECRET_KEY, ALGORITHM
 from app.core.database import get_db
 from app.models import User
+from app.utils.commons import refresh_expire
 
 """
 JWT 액세스 토큰을 생성합니다.
@@ -49,7 +50,8 @@ async def create_refresh_token(data: dict) -> str:
     user_id = data["user_id"]
 
     # 만료 시간 설정(7일)
-    expire = REFRESH_COOKIE_EXPIRE
+    _REFRESH_COOKIE_EXPIRE = refresh_expire()
+    expire = _REFRESH_COOKIE_EXPIRE
 
     # JWT 페이로드에 만료 시간과 고유 ID 추가
     refresh_payload = {

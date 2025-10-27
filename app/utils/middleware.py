@@ -7,7 +7,7 @@ from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoin
 from fastapi import Response, Request
 
 from app.core.database import get_db
-from app.core.settings import ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, REFRESH_COOKIE_EXPIRE, ACCESS_COOKIE_MAX_AGE, NEW_ACCESS_COOKIE_NAME, \
+from app.core.settings import ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, ACCESS_COOKIE_MAX_AGE, NEW_ACCESS_COOKIE_NAME, \
     NEW_REFRESH_COOKIE_NAME
 from app.services.auth_service import AuthService
 

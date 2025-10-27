@@ -10,7 +10,7 @@ import aiofiles as aio
 from starlette.concurrency import run_in_threadpool
 
 
-from app.core.settings import MEDIA_DIR
+from app.core.settings import MEDIA_DIR, REFRESH_TOKEN_EXPIRE
 from app.models import User
 
 async def random_string(length:int, _type:str):
@@ -126,6 +126,8 @@ def is_valid_email(email: str) -> bool:
     except EmailNotValidError:
         return False
 
+def refresh_expire():
+    return datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days=REFRESH_TOKEN_EXPIRE)
 
 try:
     from zoneinfo import ZoneInfo  # Python 3.9+
@@ -136,7 +138,7 @@ except Exception as e:
     KST = datetime.timezone(datetime.timedelta(hours=9), name="KST")
 
 
-def get_times():
+def get_times(): # 시간 표시는 전역변수로 두지 말고, 매번 불러서 렌더링해야한다.
     # 1) 항상 UTC aware부터 시작
     _NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc)
 
