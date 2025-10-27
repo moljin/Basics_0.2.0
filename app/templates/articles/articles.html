@@ -7,59 +7,86 @@
 
 {% block sub_css %}
     <style>
-    .object-title {
-        overflow-wrap: break-word;
-    }
+        .object-title {
+            overflow-wrap: break-word;
+        }
 
-    /* 카드 본문: 코드/긴 문자열도 줄바꿈 되도록
-    <!-- 코드블럭이 맨 첫 문단일 경우 카드가 세로로 배치되는 것 방지: 미리보기는 태그 제거 + 안전한 길이로 잘라서 표시 -->*/
-    .object-content {
-        line-height: 1.5;
-        max-height: 4.8em; /* 3줄 정도 클램프 */
-        overflow: hidden;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-    }
-    .object-content pre,
-    .object-content code,
-    .object-content .ql-code-block-container,
-    .object-content .ql-syntax {
-        white-space: pre-wrap;     /* 코드 줄바꿈 허용 */
-        word-break: break-word;
-        overflow-wrap: anywhere;
-        max-width: 100%;
-        overflow: hidden;
-        margin: 0;                 /* 과도한 바깥 여백 제거 */
-        padding: 0;                /* 목록 미리보기에서는 패딩 제거 */
-        background: transparent;   /* 목록에서는 배경 제거(선택) */
-        color: inherit;            /* 목록에서는 텍스트 색상 상속(선택) */
-    } /*코드블럭이 맨 첫 문단일 경우 카드가 세로로 배치되는 것 방지 끝*/
+        /* 카드 본문: 코드/긴 문자열도 줄바꿈 되도록
+        <!-- 코드블럭이 맨 첫 문단일 경우 카드가 세로로 배치되는 것 방지: 미리보기는 태그 제거 + 안전한 길이로 잘라서 표시 -->*/
+        .object-content {
+            line-height: 1.5;
+            max-height: 4.8em; /* 3줄 정도 클램프 */
+            overflow: hidden;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
 
-    /*pagination start*/
-    .uk-pagination > li > a,
-    .uk-pagination > li > span {
-        min-width: 36px;
-        text-align: center;
-    }
-    .uk-pagination>.uk-active>* {color: red}
-    body > main > section > article > ul > li:nth-child(2),
-    body > main > section > article > ul > li:nth-child(3),
-    body > main > section > article > ul > li:nth-child(4),
-    body > main > section > article > ul > li:nth-child(5),
-    body > main > section > article > ul > li:nth-child(6) {}
-    .prev-li .prev {display: flex; justify-content: left; align-items: center;}
-    .next-li .next {display: flex; align-items: center; padding-left: 5px;}
-    .next-li a.next {justify-content: center;}
-    .next-li a.cursor.next {justify-content: right;}
-    li.uk-disabled.next-li > span {justify-content: center;}
-    /*pagination end*/
+        .object-content pre,
+        .object-content code,
+        .object-content .ql-code-block-container,
+        .object-content .ql-syntax {
+            white-space: pre-wrap; /* 코드 줄바꿈 허용 */
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            max-width: 100%;
+            overflow: hidden;
+            margin: 0; /* 과도한 바깥 여백 제거 */
+            padding: 0; /* 목록 미리보기에서는 패딩 제거 */
+            background: transparent; /* 목록에서는 배경 제거(선택) */
+            color: inherit; /* 목록에서는 텍스트 색상 상속(선택) */
+        }
+
+        /*코드블럭이 맨 첫 문단일 경우 카드가 세로로 배치되는 것 방지 끝*/
+
+        /*pagination start*/
+        .uk-pagination > li > a,
+        .uk-pagination > li > span {
+            min-width: 36px;
+            text-align: center;
+        }
+
+        .uk-pagination > .uk-active > * {
+            color: red
+        }
+
+        body > main > .main.contents-container > ul > li:nth-child(2),
+        body > main > .main.contents-container > ul > li:nth-child(3),
+        body > main > .main.contents-container > ul > li:nth-child(4),
+        body > main > .main.contents-container > ul > li:nth-child(5),
+        body > main > .main.contents-container > ul > li:nth-child(6) {
+        }
+
+        .prev-li .prev {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+
+        .next-li .next {
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
+        }
+
+        .next-li a.next {
+            justify-content: center;
+        }
+
+        .next-li a.cursor.next {
+            justify-content: right;
+        }
+
+        li.uk-disabled.next-li > span {
+            justify-content: center;
+        }
+
+        /*pagination end*/
     </style>
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container">
-
+    <article class="main flex-item contents-container">
+        <div class="mt-10">
             <!-- 페이지 크기 선택/총 개수 -->
             <div class="uk-flex uk-flex-middle uk-flex-between uk-margin">
                 <div>
@@ -189,6 +216,7 @@
                     빠른 탐색 모드(커서 페이지네이션)
                 </div-->
             {% endif %}
-        </article>
-    </section>
+        </div>
+    </article>
+
 {% endblock %}

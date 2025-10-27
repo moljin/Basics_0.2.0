@@ -59,8 +59,8 @@
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container register-container">
+    <article class="main flex-item contents-container">
+        <div class="form-container register-container mt-10">
             <h2>회원 등록</h2>
             <hr class="hr-bold">
             <div class="uk-margin" id="errorTag"><!--js에서 넘어온 오류 메시지를 넣는다.--></div>
@@ -126,6 +126,6 @@
             </form>
             {% include 'includes/js_script/authcode_script.html' %}
             {% include 'includes/js_script/accounts_script.html' %}
-        </article>
-    </section>
+        </div>
+    </article>
 {% endblock %}

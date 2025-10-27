@@ -12,8 +12,8 @@
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container login-container">
+    <article class="main flex-item contents-container">
+        <div class="form-container login-container mt-10">
             <h2>로그인</h2>
             <hr class="hr-bold">
             <div class="uk-margin" id="errorTag"><!--js에서 넘어온 오류 메시지를 넣는다.--></div>
@@ -34,9 +34,8 @@
             </div>
 
             <script src="{{ STATIC_URL }}/statics/js/custom/accounts/login.js"></script>
-        </article>
-    </section>
-
+        </div>
+    </article>
 {% endblock %}
 
 

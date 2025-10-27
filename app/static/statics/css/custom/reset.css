@@ -18,6 +18,23 @@ sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
     vertical-align: baseline
 }
 
+body {
+    color: #1e272e;
+    line-height: 1.75rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+}
+
+body a {
+    text-decoration: none;
+    color: #341f97;
+}
+body a:hover {
+    color: #b33939;
+    text-decoration: none;
+}
+/*# sourceMappingURL=/sm/5afe8c7b72cef7e558e6906b60d8730580a09d990f202e65e984835fa5d757cc.map */
+
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {
     display: block
 }
@@ -26,9 +43,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     display: none
 }
 
-body {
-    line-height: 1
-}
 
 /*ol, ul {*/
 /*    list-style: none*/
@@ -164,17 +178,3 @@ table {
 .ml-20 {margin-left: 20px}
 .ml-30 {margin-left: 30px}
 .ml-40 {margin-left: 40px}
-
-body {
-    color: #1e272e;
-    line-height: 1.75rem;
-}
-
-body .main-container a {
-    text-decoration: none;
-    color: #341f97;
-}
-body .main-container a:hover {
-    color: #b33939;
-}
-/*# sourceMappingURL=/sm/5afe8c7b72cef7e558e6906b60d8730580a09d990f202e65e984835fa5d757cc.map */

@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container">
+    <article class="main flex-item contents-container">
+        <div class="mt-10">
             회원 상세정보 : {{ current_user }}
             <br>
             <div>id: {{ current_user.id }}</div>
@@ -21,7 +21,7 @@
                 <img src="{{ MEDIA_URL }}/default/blog_default.png" style="width: 100%" alt="Profile Image">
             {% endif %}
 
-        </article>
-    <script src="{{ STATIC_URL }}/statics/js/custom/accounts/withdraw.js"></script>
-    </section>
+            <script src="{{ STATIC_URL }}/statics/js/custom/accounts/withdraw.js"></script>
+    </article>
+    </div>
 {% endblock %}

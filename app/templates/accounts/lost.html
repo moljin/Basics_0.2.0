@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block sub_css %}
-	<link rel="stylesheet" href="{{ STATIC_URL }}/statics/css/custom/form.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}/statics/css/custom/form.css">
     <style>
         #authVerifyForm, #accountForm {
             display: none
@@ -35,8 +35,8 @@
 {% block sub_js %}
     <script>
         const UserID = {{ (current_user.id if current_user else none) | tojson }};
-        const Username= {{ (current_user.username if current_user else '') | tojson }};
-        const Email= {{ (current_user.email if current_user else '') | tojson }};
+        const Username = {{ (current_user.username if current_user else '') | tojson }};
+        const Email = {{ (current_user.email if current_user else '') | tojson }};
 
         const RegisterURL = "/apis/accounts/register";
         const UpdateURL = {{ ("/apis/accounts/" + (current_user.id | string) if current_user else none) | tojson }};
@@ -54,13 +54,12 @@
         }
 
 
-
     </script>
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container register-container">
+    <article class="main flex-item contents-container">
+        <div class="form-container register-container mt-10">
             <h2>비밀번호 분실/설정</h2>
             <hr class="hr-bold">
             <div class="uk-margin" id="errorTag"><!--js에서 넘어온 오류 메시지를 넣는다.--></div>
@@ -115,8 +114,8 @@
                     <button class="register-btn" type="submit">정보 변경</button>
                 </div>
             </form>
-        </article>
+        </div>
         {% include 'includes/js_script/authcode_script.html' %}
         {% include 'includes/js_script/lost_script.html' %}
-    </section>
+    </article>
 {% endblock %}

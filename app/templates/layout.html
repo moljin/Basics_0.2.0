@@ -38,26 +38,26 @@
         {% endblock %}
     </header>
 
-    <main>
-        {% block above_main %}
+    <main class="main-with">
+        {% block above_content %}
         {% endblock %}
 
-        {% block main %}
-        {% endblock %}
-
-        {% block body %}
-            {% block wysiwyg %}
+        <section class="section-container flex">
+            {% block main_right %}
             {% endblock %}
 
-            {% block body_content %}
+            {% block main %}
             {% endblock %}
-        {% endblock %}
 
-        {% block content %}
+            {% block main_left %}
+            {% endblock %}
+        </section>
+
+        {% block below_content %}
         {% endblock %}
     </main>
 
-    <footer>
+    <footer class="main-with">
         {% block footer %}
         {% endblock %}
     </footer>

@@ -11,8 +11,8 @@ from pydantic import SecretStr, EmailStr, TypeAdapter
 # Load .env
 load_dotenv()
 
-# APP_ENV = "development"
-APP_ENV = "production"
+APP_ENV = "development"
+# APP_ENV = "production"
 APP_NAME = "Develop_FastAPI"
 APP_VERSION = "0.1.4"
 APP_DESCRIPTION = "인프런 강의를 종합한 첫번째 프로젝트"
@@ -154,7 +154,7 @@ AUTHCODE_EMAIL_HTML_TEMPLATE = """
 """
 
 
-NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc)
+NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%S.%f')
 NOW_TIME = datetime.datetime.now()
 print("NOW_TIME_UTC: ", NOW_TIME_UTC)
 print("NOW_TIME: ", NOW_TIME)

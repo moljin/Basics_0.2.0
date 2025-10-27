@@ -38,8 +38,8 @@
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container">
+    <article class="main flex-item contents-container">
+        <div class="mt-10">
             <div class="uk-flex uk-flex-right">
                 {% if current_user.id == article.author_id %}
                     <div>
@@ -76,7 +76,6 @@
             </div>
 
 
-
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     const images = document.querySelectorAll('.object-content p img');
@@ -87,36 +86,30 @@
                         const pImg = p.querySelector('img');
 
                         if (hasImage) {
-                            if (textContent.length > 0) {pImg.style.marginTop = '20px';} else {}
-                        } else {}
+                            if (textContent.length > 0) {
+                                pImg.style.marginTop = '20px';
+                            } else {
+                            }
+                        } else {
+                        }
                     });
                     // 이미지는 모두 p태그 안에 있다. p태그는 위아래 20px를 주고 있고,
                     // p img(p테그 안에 있는 img는 margin이 전혀 없이 올라간다.
 
                     //images.forEach(img => {
-                       //if (img.style.marginTop === '') img.style.marginTop = '20px';
-                        //if (img.style.marginBottom === '') img.style.marginBottom = '20px';
+                    //if (img.style.marginTop === '') img.style.marginTop = '20px';
+                    //if (img.style.marginBottom === '') img.style.marginBottom = '20px';
                     //});
                 });
-        </script>
 
-        </article>
 
-    <article>
-        <div class="object-content-test">
 
+
+                {% if current_user %}
+                    {% if current_user.username == article.author.username %}
+                        <script src="{{ STATIC_URL }}/statics/js/custom/articles/delete.js"></script>
+                    {% endif %}
+                {% endif %}
         </div>
-        <script>
-
-        </script>
-
     </article>
-
-    {% if current_user %}
-        {% if current_user.username == article.author.username %}
-            <script src="{{ STATIC_URL }}/statics/js/custom/articles/delete.js"></script>
-        {% endif %}
-    {% endif %}
-    </section>
-
 {% endblock %}

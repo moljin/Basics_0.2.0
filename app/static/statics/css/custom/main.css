@@ -1,10 +1,62 @@
-.main-container {
-    max-width: 1180px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
-.h1 {
-    font-size: 30px;
-    font-weight: 700;
-}
+.main-with {width: 97%; margin: 0 auto;}
+.width-100 {width: 100%;}
+/************ 배경 색깔과 이미지 색깔을 동일하게 맞추는 효과 ************/
+/*body {background: hsla(56, 80%, 98%, 1);}*/
+/*.header-image.background {*/
+/*    position: relative; !* 자식 요소의 위치 기준 설정 *!*/
+/*    display: inline-block;*/
+/*}*/
+/*.header-image.background::after {*/
+/*    content: ''; !* 의사 요소(pseudo-element) 생성 *!*/
+/*    position: absolute; !* 부모 요소를 기준으로 절대 위치 지정 *!*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background: hsla(56, 80%, 98%, 1);*/
+/*    mix-blend-mode: multiply; !* 이미지와 겹쳐진 색상을 혼합하는 효과 *!*/
+/*}*/
+/************ 배경 색깔과 이미지 색깔을 동일하게 맞추는 효과 ************/
 
+header .header-container {display: flex; width:98.5%; margin-top:5px;}
+.header-image img {width:70px; height: 70px}
+.header-hr1 {margin-top:5px; margin-bottom:2px; height: 2px;  background: grey;}
+.header-hr2 {margin-top:1px !important; margin-bottom: 0 !important; background: grey; height: 1px;}
+.header-hr3 {height: 2px; background: grey;}
+.header-hr4 {margin-top:3px !important; margin-bottom:10px !important; background: grey; height: 1px;}
+.header-hr5 {margin-top:10px !important; margin-bottom:3px !important; background: grey; height: 1px;}
+.header-hr6 {height: 2px; background: grey; margin-bottom: 10px !important;}
+
+.logo-container {display: flex; justify-content: space-evenly; height: 67px;}
+.logo-container .right {width: 5%;}
+.logo {position: relative; left: -20px; text-align: center; margin-top: 4px; padding: 10px 0; font-size: 50px; font-weight: 900;}
+.logo a {color: #485460;}
+.logo-container .left {width: 5%;}
+
+.menu-container {width: 100%;}
+.menu {text-align: center; width: 80% !important;}
+.menu .item {display: flex; justify-content: space-around; gap: 10px; font-size: 18px;}
+
+footer .contents {text-align: center; font-size: 18px; color: #636e72;}
+footer .footer {padding-bottom: 15px}
+footer hr {margin-top: 10px; margin-bottom: 10px; height: 1px; background: #636e72;}
+
+.section-container.flex {display: flex; flex-wrap: wrap; /* 반응형을 위해 추가 */}
+.section-container.flex .rt-container,
+.section-container.flex .lt-container{width: 15%;}
+.section-container.flex .contents-container {width: 70%;}
+.section-container.flex .rt-container div.side-item {margin: 10px 0 10px 10px; border: 1px solid #636e72;}
+.section-container.flex .lt-container div.side-item {margin: 10px 10px 10px 0; border: 1px solid #636e72;}
+.section-container.flex .rt-container div.side-item .inner {background-color: #f5f6fa; padding: 10px}
+.section-container.flex .lt-container div.side-item .inner {background-color: #f5f6fa; padding: 10px}
+@media (max-width: 1130px) {
+    .main-with {width: 96%;}
+    .section-container.flex {flex-direction: column; /* 블록들을 세로로 쌓음 */}
+    .section-container.flex .contents-container {order: 1; /* 가운데 블록이 제일 위로 */ width: 100%;}
+    .section-container.flex .lt-container {order: 2; /* 우측 블록이 두 번째로 */width: 100%;}
+    .section-container.flex .rt-container {order: 3; /* 좌측 블록이 제일 아래로 */width: 100%;}
+    .section-container.flex .rt-container div.side-item {margin: 10px 0;}
+    .section-container.flex .lt-container div.side-item {margin: 10px 0;}
+}
+@media (max-width: 700px) {.main-with {width: 95%;}}
+@media (max-width: 550px) {.main-with {width: 93%;}}

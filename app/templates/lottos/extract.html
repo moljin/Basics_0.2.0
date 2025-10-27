@@ -17,8 +17,9 @@
 {% endblock %}
 
 {% block main %}
-    <div class="form-container">
-        <h4 class="mb-20">당첨로또 최다번호 추출</h4>
+    <article class="main flex-item contents-container">
+        <div class="form-container">
+            <h4 class="mb-20">당첨로또 최다번호 추출</h4>
             string 으로 저장된 최다빈도 번호를 integer list 로 다시 변환해야,
             탑10 로또 번호 생성시 리스트를 사용할 수 있다. <br>
             {% if old_extract_num %}
@@ -37,7 +38,7 @@
             {% endif %}
             <div>아래에 마지막 회차를 입력하면 그때까지의 당첨 최다번호를 추출하여 로또 번호 예측에 사용됩니다.</div>
             <div class="uk-margin" id="errorTag"><!--js에서 넘어온 오류 메시지를 넣는다.--></div>
-            <form id="extractForm" class="mt-20" >
+            <form id="extractForm" class="mt-20">
                 <input class="uk-input" type="text" name="latest_round" placeholder="마지막회차(숫자만) 입력">
                 <div class="mt-20">
                     <button class="uk-button uk-button-default uk-align-right" type="submit">추출</button>
@@ -49,6 +50,7 @@
             </form>
             {% include 'includes/js_script/lotto_script.html' %}
 
-    <br>
-    </div>
+            <br>
+        </div>
+    </article>
 {% endblock %}

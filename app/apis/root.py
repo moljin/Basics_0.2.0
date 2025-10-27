@@ -7,7 +7,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import APIRouter, Request, Depends
 
-from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, ADMINS
+from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, ADMINS, NOW_TIME_UTC, NOW_TIME
 from app.dependencies.auth import get_optional_current_user
 from app.models import User
 from app.utils.user import is_admin
@@ -17,30 +17,16 @@ router = APIRouter()
 
 @router.get("/", response_class=HTMLResponse,
             summary="시작 페이지", description="여기는 Root 페이지입니다.")
-async def get_root(request: Request):
-    return RedirectResponse(url="/articles")
-
-@router.get("/index", response_class=HTMLResponse,
-            summary="참고 페이지", description="여기는 참고 index 페이지입니다.")
-async def get_index(request: Request,
+async def get_root(request: Request,
                    current_user: Optional[User] = Depends(get_optional_current_user)):
-    now_time_utc = datetime.datetime.now(datetime.timezone.utc)
-    now_time = datetime.datetime.now()
     access_token = request.cookies.get(ACCESS_COOKIE_NAME)
-    print("get_root access_token:", access_token)
     csrf_token = request.cookies.get("csrf_token")
-    print("get_root csrf_token:", csrf_token)
     refresh_token = request.cookies.get(REFRESH_COOKIE_NAME)
-    print("get_root refresh_token:", refresh_token)
 
     template = "common/index.html"
     context = {'request': request,
-               "title": "Hello World!!!",
-               "now_time_utc": now_time_utc,
-               "now_time": now_time,
-               "access_token": access_token,
-               "refresh_token": refresh_token,
-               "csrf_token": csrf_token,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                'current_user': current_user,
                'admin': is_admin(current_user)}
     return templates.TemplateResponse(template, context)
@@ -53,6 +39,8 @@ async def related_server(request: Request,
 
     template = "common/server.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                'current_user': current_user,
                'admin': is_admin(current_user)}
     return templates.TemplateResponse(template, context)
@@ -65,6 +53,8 @@ async def related_server(request: Request,
 
     template = "common/docker.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                'current_user': current_user,
                'admin': is_admin(current_user)}
     return templates.TemplateResponse(template, context)

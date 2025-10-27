@@ -318,6 +318,9 @@ $RECYCLE.BIN/
 .idea/
 __pycache__
 migrations/
+app/media/default/newspaper.png
+app/media/default/paper.png
+app/media/default/stick.jpg
 app/media/user_images
 app/media/user_videos
 app/static/statics/js/custom/accounts/register_unused.js
@@ -330,8 +333,6 @@ alembic_memo.txt
 alembic.ini
 Fast Api Jwt Refresh_ A (postgres), B (redis), C (replay Detection) — Full Examples.docx
 favicon.ico
-app/templates/accounts/update_auth_not_use.html
-app/templates/articles/articles_old.html
 app/templates/sample.html
 app/templates/test.html
 app/dependencies/auth_old.py
@@ -339,6 +340,7 @@ app/utils/middleware_old.py
 lotto_data
 requirement.txt
 git_memo.txt
+deploy_memo.txt
 
 # .env는 빌드 컨텍스트에 포함
 nginx.conf

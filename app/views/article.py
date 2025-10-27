@@ -4,7 +4,7 @@ from typing import Optional
 from fastapi import Request, APIRouter, Depends, HTTPException, status, Query
 from fastapi.responses import HTMLResponse, Response,JSONResponse
 
-from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME
+from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, NOW_TIME_UTC, NOW_TIME
 from app.dependencies.auth import get_current_user, get_optional_current_user
 from app.models import User
 from app.services.article_service import get_article_service, ArticleService, KeysetDirection
@@ -105,6 +105,8 @@ async def get_all_articles(
         }
 
         context = {
+            "now_time_utc": NOW_TIME_UTC,
+            "now_time": NOW_TIME,
             "all_articles": all_articles,
             "current_user": current_user,
             "pagination": pagination,
@@ -172,6 +174,8 @@ async def get_all_articles(
     }
 
     context = {
+        "now_time_utc": NOW_TIME_UTC,
+        "now_time": NOW_TIME,
         "all_articles": items,
         "current_user": current_user,
         "pagination": pagination,
@@ -244,6 +248,8 @@ async def create_article_ui(request: Request,
     articles_all = await article_service.get_articles()
 
     context = {"current_user": current_user,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "mark_id": 0} # mark_id 이미지 undo에서 사용된다.
 
     return templates.TemplateResponse(
@@ -268,6 +274,8 @@ async def get_article_by_id(request: Request, article_id: int,
 
     template = "articles/detail.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "article": article,
                "current_user": current_user}
     return templates.TemplateResponse(template, context)
@@ -302,6 +310,8 @@ async def article_update_ui(request: Request, response: Response,
 
     template = "articles/update.html"  # update.html 파일에 js와 form tag에 필요한 부분들 분기해서 적용
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user,
                "article": article,
                "mark_id": 0}  # mark_id 이미지 undo에서 사용된다.

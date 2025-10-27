@@ -2,7 +2,7 @@
 
 {% block title %}
     {% if current_user %}
-         회원정보 수정
+        회원정보 수정
     {% else %}
         회원등록
     {% endif %}
@@ -11,18 +11,32 @@
 {% block sub_css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}/statics/css/custom/form.css">
     <style>
-        .verify-container {display: flex; justify-content: space-between;}
-        .verify-container .input-container {width: 80%;}
-        .verify-container .btn-container {width: 18%; margin-top: 28px;}
-        .verify-container .btn-container .auth-btn {height: 40px; font-size: 18px;}
+        .verify-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .verify-container .input-container {
+            width: 80%;
+        }
+
+        .verify-container .btn-container {
+            width: 18%;
+            margin-top: 28px;
+        }
+
+        .verify-container .btn-container .auth-btn {
+            height: 40px;
+            font-size: 18px;
+        }
     </style>
 {% endblock %}
 
 {% block sub_js %}
     <script>
         const UserID = {{ (current_user.id if current_user else none) | tojson }};
-        const Username= {{ (current_user.username if current_user else '') | tojson }};
-        const Email= {{ (current_user.email if current_user else '') | tojson }};
+        const Username = {{ (current_user.username if current_user else '') | tojson }};
+        const Email = {{ (current_user.email if current_user else '') | tojson }};
 
         const RegisterURL = "/apis/accounts/register";
         const UpdateURL = {{ ("/apis/accounts/" + (current_user.id | string) if current_user else none) | tojson }};
@@ -38,13 +52,12 @@
         }
 
 
-
     </script>
 {% endblock %}
 
 {% block main %}
-    <section class="main-container">
-        <article class="contents-container register-container">
+    <article class="main flex-item contents-container">
+        <div class="form-container register-container mt-10">
             {% if current_user %}
                 <h2>회원정보변경</h2>
             {% else %}
@@ -110,8 +123,6 @@
                 </div>
             </form>
             {% include 'includes/js_script/accounts_script.html' %}
-        </article>
-
-
-    </section>
+        </div>
+    </article>
 {% endblock %}

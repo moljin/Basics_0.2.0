@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from app.dependencies.auth import get_optional_current_user
 from app.models import User
 from app.schemas import user as schema_user
-from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME
+from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, NOW_TIME_UTC, NOW_TIME
 from app.services.token_service import AsyncTokenService
 from app.services.user_service import get_user_service, UserService
 from app.utils.auth import get_token_expiry
@@ -20,6 +20,8 @@ async def register_page(request: Request,
     # template = "accounts/update_auth_not_use.html"
     template = "accounts/register.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                'current_user': current_user}
     return templates.TemplateResponse(template, context)
 
@@ -28,7 +30,9 @@ async def register_page(request: Request,
             summary="로그인 HTML", description="로그인 templates.TemplateResponse")
 async def login_page(request: Request):
     template = "accounts/login.html"
-    context = {'request': request}
+    context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,}
     return templates.TemplateResponse(template, context)
 
 @router.post(
@@ -85,6 +89,8 @@ async def get_user__by_id(request: Request, user_id: int,
 
     template = "accounts/detail.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user}
     return templates.TemplateResponse(template, context)
 
@@ -106,6 +112,8 @@ async def user_update_ui(request: Request, user_id: int,
 
     template = "accounts/update.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user}
     return templates.TemplateResponse(template, context)
 
@@ -127,6 +135,8 @@ async def update_username(request: Request, user_id: int,
 
     template = "accounts/each.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user,
                "username": current_user.username,}
     return templates.TemplateResponse(template, context)
@@ -148,6 +158,8 @@ async def update_user_email(request: Request, user_id: int,
 
     template = "accounts/each.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user,
                "email": current_user.email,}
     return templates.TemplateResponse(template, context)
@@ -169,6 +181,8 @@ async def update_user_image(request: Request, user_id: int,
 
     template = "accounts/each.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user,
                "image": "image",}
     return templates.TemplateResponse(template, context)
@@ -191,6 +205,8 @@ async def update_user_password(request: Request, user_id: int,
 
     template = "accounts/each.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user,
                "password": current_user.password,}
     return templates.TemplateResponse(template, context)
@@ -203,5 +219,7 @@ async def update_user_lost_password(request: Request,
                          current_user: Optional[User] = Depends(get_optional_current_user)):
     template = "accounts/lost.html"
     context = {'request': request,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
                "current_user": current_user}
     return templates.TemplateResponse(template, context)

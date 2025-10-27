@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from app.core.database import get_db
-from app.core.settings import templates, ADMINS
+from app.core.settings import templates, ADMINS, NOW_TIME_UTC, NOW_TIME
 from app.dependencies.auth import get_optional_current_user, get_current_user, allow_usernames
 from app.lottos.models import LottoNum, STATUS
 from app.lottos.utils import extract_latest_round, extract_first_win_num, latest_lotto, extract_frequent_num, excell2lotto_list
@@ -122,6 +122,8 @@ async def random_lotto(request: Request,
                            "latest": int(latest_round_num),
                            "message": message,
                            'current_user': current_user,
+                           "now_time_utc": NOW_TIME_UTC,
+                           "now_time": NOW_TIME,
                            'admin': is_admin(current_user)}
                 return templates.TemplateResponse(
                     request=request,
@@ -134,6 +136,8 @@ async def random_lotto(request: Request,
                            "latest": int(latest_round_num),
                            "message": message,
                            'current_user': current_user,
+                           "now_time_utc": NOW_TIME_UTC,
+                           "now_time": NOW_TIME,
                            'admin': is_admin(current_user)}
                 return templates.TemplateResponse(
                     request=request,
@@ -149,6 +153,8 @@ async def random_lotto(request: Request,
                            "latest": int(latest_round_num),
                            "message": message,
                            'current_user': current_user,
+                           "now_time_utc": NOW_TIME_UTC,
+                           "now_time": NOW_TIME,
                            'admin': is_admin(current_user)}
                 return templates.TemplateResponse(
                     request=request,
@@ -161,6 +167,8 @@ async def random_lotto(request: Request,
                    "latest": latest_round_num,
                    "message": message,
                    'current_user': current_user,
+                   "now_time_utc": NOW_TIME_UTC,
+                   "now_time": NOW_TIME,
                    'admin': is_admin(current_user)}
         return templates.TemplateResponse(
             request=request,
@@ -173,6 +181,8 @@ async def random_lotto(request: Request,
                    "latest": "0000",
                    "message": message,
                    'current_user': current_user,
+                   "now_time_utc": NOW_TIME_UTC,
+                   "now_time": NOW_TIME,
                    'admin': is_admin(current_user)}
         return templates.TemplateResponse(
             request=request,
@@ -304,7 +314,11 @@ async def top10_lotto(request: Request,
         context = {"variable": lotto_random_num,
                    "latest": int(latest_round_num),
                    "message": message,
-                   'current_user': current_user}
+                   'current_user': current_user,
+                   "now_time_utc": NOW_TIME_UTC,
+                   "now_time": NOW_TIME,
+                   'admin': is_admin(current_user)
+                   }
         return templates.TemplateResponse(
             request=request,
             name="lottos/lotto.html",
@@ -323,7 +337,11 @@ async def top10_lotto(request: Request,
     context = {"variable": lotto_random_num,
                "latest": int(latest_round_num),
                "message": message,
-               'current_user': current_user}
+               'current_user': current_user,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
+                   'admin': is_admin(current_user)
+               }
     return templates.TemplateResponse(
         request=request,
         name="lottos/lotto.html",
@@ -334,7 +352,7 @@ async def top10_lotto(request: Request,
 @router.get("/win/extract")
 async def win_extract_lotto(request: Request,
                             db: AsyncSession = Depends(get_db),
-                            admin_user = Depends(allow_usernames(ADMINS))
+                            current_user: Optional[User] = Depends(get_optional_current_user)
                             ):
     old_latest = await latest_lotto(db)
     if old_latest:
@@ -345,7 +363,11 @@ async def win_extract_lotto(request: Request,
 
     context = {"old_extract": old_latest,
                "old_extract_num": full_int_list,
-               'current_user': admin_user}
+               'current_user': current_user,
+               "now_time_utc": NOW_TIME_UTC,
+               "now_time": NOW_TIME,
+               'admin': is_admin(current_user)
+               }
     return templates.TemplateResponse(
         request=request,
         name="lottos/extract.html",
