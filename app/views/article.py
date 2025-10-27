@@ -9,7 +9,6 @@ from app.dependencies.auth import get_current_user, get_optional_current_user
 from app.models import User
 from app.services.article_service import get_article_service, ArticleService, KeysetDirection
 from app.utils.commons import get_times
-from app.utils.user import is_admin
 
 router = APIRouter()
 
@@ -291,8 +290,7 @@ async def get_article_by_id(request: Request, article_id: int,
                "now_time_utc": _NOW_TIME_UTC,
                "now_time": _NOW_TIME,
                "article": article,
-               "current_user": current_user,
-               'admin': is_admin(current_user)}
+               "current_user": current_user}
     return templates.TemplateResponse(template, context)
 
 

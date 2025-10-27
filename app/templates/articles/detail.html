@@ -49,9 +49,6 @@
                         <p class="uk-text-right uk-margin-right"><a href="#" id="deleteBtn">삭제</a></p>
                     </div>
                 {% endif %}
-                <div>
-                    <p class="uk-text-right"><a href="/articles">모든 게시글</a></p>
-                </div>
             </div>
             <input type="hidden" id="article_id" name="article_id" value="{{ article.id }}">
 
@@ -106,7 +103,7 @@
 
 
 
-                {% if current_user and admin %}
+                {% if current_user.id == article.author_id %}
                     <script src="{{ STATIC_URL }}/statics/js/custom/articles/delete.js"></script>
                 {% endif %}
         </div>
