@@ -4,10 +4,11 @@ from typing import Optional
 from fastapi import Request, APIRouter, Depends, HTTPException, status, Query
 from fastapi.responses import HTMLResponse, Response,JSONResponse
 
-from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME, NOW_TIME_UTC, NOW_TIME
+from app.core.settings import templates, ACCESS_COOKIE_NAME, REFRESH_COOKIE_NAME
 from app.dependencies.auth import get_current_user, get_optional_current_user
 from app.models import User
 from app.services.article_service import get_article_service, ArticleService, KeysetDirection
+from app.utils.commons import get_times
 
 router = APIRouter()
 
@@ -103,10 +104,12 @@ async def get_all_articles(
             "prev_href": prev_href,
             "next_href": next_href,
         }
+        now_time_utc, _NOW_TIME = get_times()
+        _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
 
         context = {
-            "now_time_utc": NOW_TIME_UTC,
-            "now_time": NOW_TIME,
+            "now_time_utc": _NOW_TIME_UTC,
+            "now_time": _NOW_TIME,
             "all_articles": all_articles,
             "current_user": current_user,
             "pagination": pagination,
@@ -172,10 +175,12 @@ async def get_all_articles(
         "page_range": page_range,
         "deep_page_threshold": DEEP_PAGE_THRESHOLD,
     }
+    now_time_utc, _NOW_TIME = get_times()
+    _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     context = {
-        "now_time_utc": NOW_TIME_UTC,
-        "now_time": NOW_TIME,
+        "now_time_utc": _NOW_TIME_UTC,
+        "now_time": _NOW_TIME,
         "all_articles": items,
         "current_user": current_user,
         "pagination": pagination,
@@ -246,10 +251,12 @@ async def create_article_ui(request: Request,
         )
 
     articles_all = await article_service.get_articles()
+    now_time_utc, _NOW_TIME = get_times()
+    _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     context = {"current_user": current_user,
-               "now_time_utc": NOW_TIME_UTC,
-               "now_time": NOW_TIME,
+               "now_time_utc": _NOW_TIME_UTC,
+               "now_time": _NOW_TIME,
                "mark_id": 0} # mark_id 이미지 undo에서 사용된다.
 
     return templates.TemplateResponse(
@@ -271,11 +278,13 @@ async def get_article_by_id(request: Request, article_id: int,
             status_code=status.HTTP_404_NOT_FOUND,
             detail="해당 게시글을 찾을 수 없습니다."
         )
+    now_time_utc, _NOW_TIME = get_times()
+    _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     template = "articles/detail.html"
     context = {'request': request,
-               "now_time_utc": NOW_TIME_UTC,
-               "now_time": NOW_TIME,
+               "now_time_utc": _NOW_TIME_UTC,
+               "now_time": _NOW_TIME,
                "article": article,
                "current_user": current_user}
     return templates.TemplateResponse(template, context)
@@ -308,10 +317,13 @@ async def article_update_ui(request: Request, response: Response,
                 detail="Not authorized: 접근 권한이 없습니다."
             )
 
+    now_time_utc, _NOW_TIME = get_times()
+    _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+
     template = "articles/update.html"  # update.html 파일에 js와 form tag에 필요한 부분들 분기해서 적용
     context = {'request': request,
-               "now_time_utc": NOW_TIME_UTC,
-               "now_time": NOW_TIME,
+               "now_time_utc": _NOW_TIME_UTC,
+               "now_time": _NOW_TIME,
                "current_user": current_user,
                "article": article,
                "mark_id": 0}  # mark_id 이미지 undo에서 사용된다.

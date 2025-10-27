@@ -127,8 +127,23 @@ def is_valid_email(email: str) -> bool:
         return False
 
 
-from zoneinfo import ZoneInfo
-KST = ZoneInfo("Asia/Seoul")
+try:
+    from zoneinfo import ZoneInfo  # Python 3.9+
+    KST = ZoneInfo("Asia/Seoul")
+except Exception as e:
+    print("zoneInfo error: ", e)
+    # tzdata가 없을 때를 위한 안전한 폴백(고정 +09:00)
+    KST = datetime.timezone(datetime.timedelta(hours=9), name="KST")
+
+
+def get_times():
+    # 1) 항상 UTC aware부터 시작
+    _NOW_TIME_UTC= datetime.datetime.now(datetime.timezone.utc)
+
+    # 2) 필요한 지역시간(KST)으로 변환
+    _NOW_TIME = _NOW_TIME_UTC.astimezone(KST)
+    return _NOW_TIME_UTC, _NOW_TIME
+
 
 def to_kst(dt: datetime.datetime | None, fmt: str = "%Y-%m-%d %H:%M:%S") -> str:
     """
