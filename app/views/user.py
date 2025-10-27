@@ -18,8 +18,9 @@ router = APIRouter()
             summary="회원가입 HTML", description="회원가입 templates.TemplateResponse")
 async def register_page(request: Request,
                         current_user: Optional[User] = Depends(get_optional_current_user)):
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     # template = "accounts/update_auth_not_use.html"
     template = "accounts/register.html"
     context = {'request': request,
@@ -32,8 +33,9 @@ async def register_page(request: Request,
 @router.get("/login", response_class=HTMLResponse,
             summary="로그인 HTML", description="로그인 templates.TemplateResponse")
 async def login_page(request: Request):
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/login.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,
@@ -91,8 +93,9 @@ async def get_user__by_id(request: Request, user_id: int,
     else:
         if current_user.id != user_id or not user:
             raise CustomErrorException(status_code=403, detail="접근권한이 없습니다.")
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     template = "accounts/detail.html"
     context = {'request': request,
@@ -116,8 +119,9 @@ async def user_update_ui(request: Request, user_id: int,
     else:
         if current_user.id != user_id or not user:
             raise CustomErrorException(status_code=403, detail="접근권한이 없습니다.")
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/update.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,
@@ -140,8 +144,9 @@ async def update_username(request: Request, user_id: int,
         if current_user.id != user_id or not user:
             raise CustomErrorException(status_code=403, detail="접근권한이 없습니다.")
 
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/each.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,
@@ -164,8 +169,9 @@ async def update_user_email(request: Request, user_id: int,
     else:
         if current_user.id != user_id or not user:
             raise CustomErrorException(status_code=403, detail="접근권한이 없습니다.")
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/each.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,
@@ -188,8 +194,9 @@ async def update_user_image(request: Request, user_id: int,
     else:
         if current_user.id != user_id or not user:
             raise CustomErrorException(status_code=403, detail="접근권한이 없습니다.")
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/each.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,
@@ -213,8 +220,9 @@ async def update_user_password(request: Request, user_id: int,
     else:
         if current_user.id != user_id or not user:
             raise CustomErrorException(status_code=403, detail="접근권한이 없습니다.")
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/each.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,
@@ -229,8 +237,9 @@ async def update_user_password(request: Request, user_id: int,
 async def update_user_lost_password(request: Request,
                          user_service: UserService = Depends(get_user_service),
                          current_user: Optional[User] = Depends(get_optional_current_user)):
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     template = "accounts/lost.html"
     context = {'request': request,
                "now_time_utc": _NOW_TIME_UTC,

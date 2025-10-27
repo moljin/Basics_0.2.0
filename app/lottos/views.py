@@ -119,8 +119,9 @@ async def random_lotto(request: Request,
         if num:
             if int(num) < 6:
                 message = f"6이상의 숫자를 입력하세요! 우선 빈도에 관계없이 무작위로 추출했어요!"
-                now_time_utc, _NOW_TIME = get_times()
+                now_time_utc, now_time = get_times()
                 _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+                _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
                 context = {"variable": sorted(random.sample(range(1, 46), 6)),
                            "latest": int(latest_round_num),
                            "message": message,
@@ -135,8 +136,9 @@ async def random_lotto(request: Request,
                 )
             elif int(num) >= 45:
                 message = f"45이상은 빈도에 관계없이 무작위로 추출하는 것과 같아요!"
-                now_time_utc, _NOW_TIME = get_times()
+                now_time_utc, now_time = get_times()
                 _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+                _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
                 context = {"variable": sorted(random.sample(range(1, 46), 6)),
                            "latest": int(latest_round_num),
                            "message": message,
@@ -153,8 +155,9 @@ async def random_lotto(request: Request,
                 lotto_num_list = ast.literal_eval(old_latest.lotto_num_list)
                 wanted_top_list, lotto_random_num = await extract_frequent_num(lotto_num_list, int(num))
                 message = f"당첨 빈도가 높은 번호 {num}개중 6개를 무작위로 추출"
-                now_time_utc, _NOW_TIME = get_times()
+                now_time_utc, now_time = get_times()
                 _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+                _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
                 context = {"input_num": num,
                            "variable": lotto_random_num,
                            "latest": int(latest_round_num),
@@ -170,8 +173,9 @@ async def random_lotto(request: Request,
                 )
 
         message = f"당첨 빈도에 관계없이 6개의 숫자를 무작위로 추출"
-        now_time_utc, _NOW_TIME = get_times()
+        now_time_utc, now_time = get_times()
         _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+        _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
         context = {"variable": sorted(random.sample(range(1, 46), 6)),
                    "latest": latest_round_num,
                    "message": message,
@@ -186,8 +190,9 @@ async def random_lotto(request: Request,
         )
     else:
         message = f"당첨 빈도에 관계없이 6개의 숫자를 무작위로 추출"
-        now_time_utc, _NOW_TIME = get_times()
+        now_time_utc, now_time = get_times()
         _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+        _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
         context = {"variable": sorted(random.sample(range(1, 46), 6)),
                    "latest": "0000",
                    "message": message,
@@ -322,8 +327,9 @@ async def top10_lotto(request: Request,
         latest_round_num = old_latest.latest_round_num
         wanted_top_list, lotto_random_num = await extract_frequent_num(lotto_num_list, int(num))
         message = f"당첨 빈도가 높은 번호 {num}개중 6개를 무작위로 추출"
-        now_time_utc, _NOW_TIME = get_times()
+        now_time_utc, now_time = get_times()
         _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+        _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
         context = {"variable": lotto_random_num,
                    "latest": int(latest_round_num),
                    "message": message,
@@ -347,8 +353,9 @@ async def top10_lotto(request: Request,
         lotto_top10 = [34, 12, 13, 18, 27, 14, 40, 45, 33, 37]
         lotto_random_num = sorted(random.sample(lotto_top10, 6))
     message = f"당첨 빈도가 높은 번호 10개중 6개를 무작위로 추출"
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     context = {"variable": lotto_random_num,
                "latest": int(latest_round_num),
                "message": message,
@@ -375,8 +382,9 @@ async def win_extract_lotto(request: Request,
         full_int_list = ast.literal_eval(old_latest.extract_num)
     else:
         full_int_list = []
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
     context = {"old_extract": old_latest,
                "old_extract_num": full_int_list,
                'current_user': current_user,

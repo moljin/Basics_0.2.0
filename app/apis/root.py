@@ -24,8 +24,9 @@ async def get_root(request: Request,
     csrf_token = request.cookies.get("csrf_token")
     refresh_token = request.cookies.get(REFRESH_COOKIE_NAME)
 
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     template = "common/index.html"
     context = {'request': request,
@@ -40,8 +41,9 @@ async def get_root(request: Request,
             summary="서버 개발 페이지", description="여기는 서버 셋팅관련 페이지입니다.")
 async def related_server(request: Request,
                    current_user: Optional[User] = Depends(get_optional_current_user)):
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     template = "common/server.html"
     context = {'request': request,
@@ -56,8 +58,9 @@ async def related_server(request: Request,
             summary="도커 개발 페이지", description="여기는 우분투 서버에 도커 셋팅관련 페이지입니다.")
 async def related_server(request: Request,
                    current_user: Optional[User] = Depends(get_optional_current_user)):
-    now_time_utc, _NOW_TIME = get_times()
+    now_time_utc, now_time = get_times()
     _NOW_TIME_UTC = now_time_utc.strftime('%Y-%m-%d %H:%M:%S.%f')
+    _NOW_TIME = now_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     template = "common/docker.html"
     context = {'request': request,
