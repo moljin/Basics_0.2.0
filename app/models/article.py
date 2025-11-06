@@ -11,6 +11,7 @@ class Article(Base):
     __tablename__ = "articles"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    # String은 제한 글자수를 지정해야 한다.
     title: Mapped[str] = mapped_column(String(100), index=True)
     img_path: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
     content: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
@@ -18,6 +19,7 @@ class Article(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
+    # users.id에서 users는 테이블명
     # 외래키를 사용할 때, 제약 조건에 name을 ForeignKey 안에 ForeignKey("users.id", name="fk_author_id") 이렇게 넣어라.
     author_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", name="fk_author_id", ondelete='CASCADE'), nullable=False)
     # author_id가 nullable=True 이므로 Optional["User"]가 일관됩니다.
@@ -25,6 +27,13 @@ class Article(Base):
                                                                   lazy="selectin",
                                                                   cascade="all, delete-orphan",
                                                                   passive_deletes=True), lazy="selectin")
+    """ author 속성은 User 모델에서 Article 모델을 참조하기 위해 추가했다. 위와 같이 relationship으로 author(User) 속성을 생성하면,
+    게시글 객체(예: article)에서 연결된 저자의 username 을 article.user.username 처럼 참조할 수 있다. 
+    
+    relationship의 첫 번째 파라미터는 참조할 모델명이고 두 번째 backref 파라미터는 역참조 설정이다. 역참조란 쉽게 말해 User 에서 Article을 거꾸로 참조하는 것을 의미한다. 
+    한 User에는 여러 개의 Article이 생성 수 있는데 역참조는 이 User가 작성한 Article 들을 참조할 수 있게 한다. 
+    예를 들어 어떤 User에 해당하는 객체가 a_user 라면 a_user.article_user_set 같은 코드로 해당 User가 작성한 Article 들을 참조할 수 있다.
+    """
 
 
 def __repr__(self):

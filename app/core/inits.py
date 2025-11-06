@@ -13,7 +13,7 @@ from app.utils import exc_handler
 from app.utils.commons import to_kst
 from app.utils.middleware import TokenSetCookieMiddleware
 
-from app.apis import root, user, article, auth, quills
+from app.apis import root, user, article, auth, quills, swagger
 from app.views import user as views_user
 from app.views import article as views_article
 from app.lottos import views as views_lotto
@@ -44,6 +44,7 @@ async def lifespan(app: FastAPI):
 
 
 def including_router(app):
+    app.include_router(swagger.router, prefix="/swagger") # Swagger UI customizing with CSRF_TOKEN
     app.include_router(root.router, prefix="", tags=["Root"]) # root 페이지는 / 슬래시를 없애라.
     app.include_router(user.router, prefix="/apis/accounts", tags=["User"])
     app.include_router(article.router, prefix="/apis/articles", tags=["Article"])
@@ -66,6 +67,8 @@ def including_middleware(app):
                        allow_credentials=True,
                        max_age=-1)
     app.add_middleware(TokenSetCookieMiddleware)
+
+    # Swagger UI customizing with CSRF_TOKEN
     app.add_middleware(FastAPICSRFJinjaMiddleware, secret=SECRET_KEY,
                        cookie_name="csrf_token", header_name="X-CSRF-Token")
 
@@ -79,9 +82,18 @@ def create_app():
                   version=config.APP_VERSION,
                   description=config.APP_DESCRIPTION,
                   lifespan=lifespan,
-                  docs_url=None)#, redoc_url=None)
+                  docs_url=None, redoc_url=None) # docs_url=None, redoc_url=None 을 주면 기본 /docs, /redoc 페이지가 비활성화됩니다.
+                  # docs_url = None, redoc_url = "/swagger/redoc")
+    '''# 주소만 커스터마이징할 때 redoc_url = "/swagger/redoc" 이렇게 하면된다. 
+        주소 뿐만 아니라 html 문서자체를 커스텀 마이징하는 경우는 views/swagger.py 의 함수를 사용하면 된다.
+    '''
 
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+    """
+    "/static" : url path
+    StaticFiles(directory=STATIC_DIR) : static file 물리적 directory
+    name="static": url_for 등에서 참조하는 이름
+    """
     app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
     templates.env.globals["STATIC_URL"] = "/static"
     templates.env.globals["MEDIA_URL"] = "/media"

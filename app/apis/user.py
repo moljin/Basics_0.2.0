@@ -24,6 +24,7 @@ from app.services.token_service import AsyncTokenService, REFRESH_TOKEN_PREFIX
 from app.services.user_service import UserService, get_user_service
 from app.utils.auth import get_token_expiry
 from app.utils.commons import upload_single_image, old_image_remove, remove_dir_with_files, random_string, is_valid_email
+from app.utils.email import fastapi_email
 from app.utils.exc_handler import CustomErrorException
 from app.utils.user import verify_password
 
@@ -63,7 +64,7 @@ async def register_user(username: str = Form(...),
 
     try:
         validated_email: EmailStr = TypeAdapter(EmailStr).validate_python(email)
-        user_in = schema_user.UserIn(username=username, email=validated_email, password=password)
+        user_in = schema_user.UserIn(username=username, email=validated_email, password=password) # 템플릿 단에서 넘어온 UserIn validation
     except ValidationError as e:
         print("CustomErrorException STATUS_CODE: ", 432, "이메일 형식 부적합")
         raise CustomErrorException(status_code=432, detail="이메일 형식 부적합")
@@ -172,7 +173,6 @@ async def authcode_request_email(payload: EmailRequest,
     )
 
     try:
-        from main import fastapi_email
         await fastapi_email.send_message(message)
     except Exception as e:
         await redis_client.delete(code_key) # 실패 시 Redis에 저장된 코드 제거

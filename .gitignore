@@ -332,6 +332,7 @@ memo.txt
 alembic_memo.txt
 alembic.ini
 Fast Api Jwt Refresh_ A (postgres), B (redis), C (replay Detection) — Full Examples.docx
+FastAPI_강의자료_V03.pdf
 favicon.ico
 app/templates/sample.html
 app/templates/test.html
@@ -345,3 +346,4 @@ deploy_memo.txt
 # .env는 빌드 컨텍스트에 포함
 nginx.conf
 redis.conf
+fastapi
